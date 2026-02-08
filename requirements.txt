@@ -4,3 +4,4 @@ python-multipart==0.0.20
 Pillow==11.0.0
 marko==2.1.2
 requests==2.32.3
+python-frontmatter==1.0.0
