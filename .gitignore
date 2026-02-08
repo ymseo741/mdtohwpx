@@ -1,0 +1,13 @@
+venv/
+__pycache__/
+*.pyc
+.DS_Store
+frontend/node_modules/
+frontend/dist/
+.env
+temp_conversions/
+test_output.hwpx
+result.hwpx
+result_*.hwpx
+.idea/
+.vscode/
