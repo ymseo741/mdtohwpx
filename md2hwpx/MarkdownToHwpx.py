@@ -1513,16 +1513,21 @@ class MarkdownToHwpx:
         return self._handle_text_block(content, 'BODY')
 
     def _render_mermaid(self, code):
-        """Render Mermaid code to a temporary PNG file via mermaid.ink."""
+        """Render Mermaid code to a temporary PNG file via kroki.io (POST)."""
         try:
-            # Base64 encode the mermaid code
-            code_bytes = code.strip().encode('utf-8')
-            b64_code = base64.b64encode(code_bytes).decode('utf-8')
-            url = f"https://mermaid.ink/img/{b64_code}"
+            url = "https://kroki.io/mermaid/png"
+            data = code.strip().encode('utf-8')
             
-            # Fetch the image
-            req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
-            with urllib.request.urlopen(req) as response:
+            # Use POST request to avoid URL length limits and encoding issues
+            req = urllib.request.Request(
+                url, 
+                data=data, 
+                method='POST', 
+                headers={'Content-Type': 'text/plain', 'User-Agent': 'MD2HWPX/1.0'}
+            )
+            
+            # Set timeout to prevent hanging (e.g., 10 seconds)
+            with urllib.request.urlopen(req, timeout=10) as response:
                 if response.status == 200:
                     with tempfile.NamedTemporaryFile(delete=False, suffix='.png') as tmp:
                         tmp.write(response.read())
