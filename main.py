@@ -35,6 +35,7 @@ async def serve_index():
     return "Frontend not built yet. Run 'npm run build' in frontend directory."
 
 @app.post("/convert")
+@app.post("/api/convert") # Support both paths
 async def convert_md(
     text: str = Form(None),
     file: UploadFile = File(None)
