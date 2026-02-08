@@ -25,7 +25,7 @@ COPY . .
 # Copy built frontend assets to the static directory expected by main.py
 # main.py expects 'static/index.html' and 'static/assets'
 RUN rm -rf static && mkdir static
-COPY --from=frontend-builder /app/frontend/dist ./static
+COPY --from=frontend-builder /app/static ./static
 
 # Expose port (Render sets PORT env var, but good to document)
 EXPOSE 8000
